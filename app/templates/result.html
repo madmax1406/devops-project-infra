@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacing Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title">🏅 Your Pacing Strategy</h1>
+
+    <div class="card">
+        <p><strong>Race:</strong> {{ race }}</p>
+        <p><strong>Total Time:</strong> {{ total_time }}</p>
+        <p><strong>Pace per KM:</strong> {{ pace }} min/km</p>
+    </div>
+
+    <h2 class="subtitle">KM-wise Splits</h2>
+
+    <table class="split-table">
+        <thead>
+            <tr>
+                <th>KM</th>
+                <th>Split</th>
+                <th>Cumulative</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for s in splits %}
+            <tr>
+                <td>{{ s.km }}</td>
+                <td>{{ s.split }}</td>
+                <td>{{ s.cumulative }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/" class="btn">Calculate Again</a>
+</div>
+
+</body>
+</html>
