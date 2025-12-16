@@ -22,7 +22,7 @@ pipeline {
 
         stage ('Push to Docker Hub Repo'){
             steps{
-                withCredentials([usernamePassword(credentialsId: '', passwordVariable: 'PWD', usernameVariable: 'USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'PWD', usernameVariable: 'USERNAME')]) {
                   sh "echo $PWD | docker login -u $USERNAME --password-stdin"
                   sh "docker push $IMAGE:$TAG"
                 }
