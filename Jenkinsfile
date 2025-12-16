@@ -42,6 +42,9 @@ pipeline {
             steps {
                 sshagent(credentials: ['github-ssh']) {
                 sh """
+                    git checkout main || git checkout -b main
+                    git pull origin main
+                    
                     git config user.email "jenkins@local"
                     git config user.name "Jenkins"
 
