@@ -38,20 +38,22 @@ pipeline {
             }
         }
 
-        stage ('Commit and Push changes to Github'){
-            steps{
-                withCredentials([string(credentialsId: 'github-token', variable: 'TOKEN')]) {
-                  sh """
-                  git config user.email "jenkins@local"
-                  git config user.name "Jenkins"
-                  git add .
-                  git commit -m "Auto bump tag to $TAG"
-                  git remote set-url origin https://$TOKEN@github.com/madmax1406/devops-project.git
-                  git push origin main 
-                  """
-                 }
+        stage('Commit and Push changes to Github') {
+            steps {
+                sshagent(credentials: ['github-ssh']) {
+                sh """
+                    git config user.email "jenkins@local"
+                    git config user.name "Jenkins"
 
+                    git add .
+                    git commit -m "Auto bump tag to ${TAG}" || echo "Nothing to commit"
+
+                    git remote set-url origin git@github.com:madmax1406/devops-project.git
+                    git push origin main
+                """
+                }
             }
         }
+
     }
 }
